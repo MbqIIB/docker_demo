@@ -1,6 +1,6 @@
 # create pod and deployment
-kubectl run my-nginx --image=nginx --replicas=2 --port=80
-
+kubectl run my-nginx --image=nginx --replicas=2 --port=80 --record
+# create a service and expose the port
 kubectl expose deployment my-nginx --type=LoadBalancer --port=80
 
 
@@ -10,7 +10,7 @@ kubectl describe pods
 
 kubectl exec -ti my-nginx-xxxxxxxxx /bin/bash
 
-ps uax
+cat /etc/resolv.conf
 
 ls -l /var/run/secrets/kubernetes.io/serviceaccount/
 
@@ -30,12 +30,17 @@ kubectl get services
 kubectl describe services/my-nginx
 
 # run a pod with curl
-kubectl run -i -t --rm cli --image=tutum/curl --restart=Never
+kubectl run -i -t cli --image=tutum/curl --restart=Never
 
 curl http://10.100.68.75
 
-curl http://my-nginx
 
 # login to nginx server
 kubectl exec -ti my-nginx-xxxxx -- /bin/bash
  cat /etc/resolv.conf
+
+ # apply typo configuration
+ kubectl apply -f my-nginx-typo.yml
+
+ # Undo changes
+ kubectl rollout undo deployment/my-nginx
