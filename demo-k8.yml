@@ -1,0 +1,41 @@
+# create pod and deployment
+kubectl run my-nginx --image=nginx --replicas=2 --port=80
+
+kubectl expose deployment my-nginx --type=LoadBalancer --port=80
+
+
+kubectl get pods
+
+kubectl describe pods
+
+kubectl exec -ti my-nginx-xxxxxxxxx /bin/bash
+
+ps uax
+
+ls -l /var/run/secrets/kubernetes.io/serviceaccount/
+
+kubectl exec my-nginx-3800858182-auusv -- /bin/ls -l
+
+# Deployments and Replica Sets
+
+kubectl get deployments
+
+kubectl get replicasets
+
+kubectl describe deployments/my-nginx
+
+# services
+kubectl get services
+
+kubectl describe services/my-nginx
+
+# run a pod with curl
+kubectl run -i -t --rm cli --image=tutum/curl --restart=Never
+
+curl http://10.100.68.75
+
+curl http://my-nginx
+
+# login to nginx server
+kubectl exec -ti my-nginx-xxxxx -- /bin/bash
+ cat /etc/resolv.conf
