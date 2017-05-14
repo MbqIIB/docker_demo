@@ -1,0 +1,37 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    run: sandeep-demo
+  name: sandeep-demo
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      run: sandeep-demo
+  template:
+    metadata:
+      labels:
+        run: sandeep-demo
+    spec:
+      containers:
+      - image: smendiratta/sandeep_demo
+        name: sandeep-demo
+        ports:
+        - containerPort: 80
+          protocol: TCP
+
+---
+  apiVersion: v1
+  kind: Service
+  metadata:
+    name: sandeep-demo
+    labels:
+      run: sandeep-demo
+  spec:
+    ports:
+    - port: 80
+      protocol: TCP
+    selector:
+      run: sandeep-demo
